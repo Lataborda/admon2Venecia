@@ -7,13 +7,13 @@ st.set_page_config(page_title="Cartera Venecia", page_icon="🏡", layout="wide"
 @st.cache_data(ttl=600)
 def cargar_datos():
     conexion = psycopg2.connect(
-        host=st.secrets["supabase"]["host"],
-        port=st.secrets["supabase"]["port"],
-        dbname=st.secrets["supabase"]["dbname"],
-        user=st.secrets["supabase"]["user"],
-        password=st.secrets["supabase"]["password"],
-        sslmode="require"
-    )
+    host=st.secrets["supabase"]["host"],
+    port=st.secrets["supabase"]["port"],
+    dbname=st.secrets["supabase"]["dbname"],
+    user=st.secrets["supabase"]["user"],
+    password=st.secrets["supabase"]["password"],
+    sslmode="require"
+)
 
     query = "SELECT * FROM reporte_gerencial;"
     df = pd.read_sql_query(query, conexion)

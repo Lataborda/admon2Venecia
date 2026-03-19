@@ -6,7 +6,7 @@ st.set_page_config(page_title="Cartera Venecia", page_icon="🏡", layout="wide"
 
 @st.cache_data(ttl=600)
 def cargar_datos():
-    conn = psycopg2.connect(
+    conexion = psycopg2.connect(
         host=st.secrets["supabase"]["host"],
         port=st.secrets["supabase"]["port"],
         dbname=st.secrets["supabase"]["dbname"],
@@ -14,10 +14,10 @@ def cargar_datos():
         password=st.secrets["supabase"]["password"],
         sslmode="require"
     )
-
-    query = "SELECT * FROM reporte_gerencial;"
-    df = pd.read_sql_query(query, conn)
-    conn.close()
+    
+    query = 'SELECT * FROM reporte_gerencial;'
+    df = pd.read_sql_query(query, conexion)
+    conexion.close()
     return df
 
 try:

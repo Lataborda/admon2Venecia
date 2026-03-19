@@ -5,10 +5,18 @@ import psycopg2
 # 1. Configuración de diseño (Atractivo y pantalla completa)
 st.set_page_config(page_title="Cartera Venecia", page_icon="🏡", layout="wide")
 
-# Función para conectarse a Supabase
+# Función para conectarse a Supabase de forma segura
 @st.cache_data(ttl=600)
 def cargar_datos():
-    conexion = psycopg2.connect(st.secrets["DATABASE_URL"])
+    # Conexión directa por parámetros (evita errores de lectura de URL)
+    conexion = psycopg2.connect(
+        host=st.secrets["supabase"]["host"],
+        port=st.secrets["supabase"]["port"],
+        database=st.secrets["supabase"]["dbname"],
+        user=st.secrets["supabase"]["user"],
+        password=st.secrets["supabase"]["password"]
+    )
+    
     query = 'SELECT * FROM reporte_gerencial;'
     df = pd.read_sql_query(query, conexion)
     conexion.close()

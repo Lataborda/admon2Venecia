@@ -2,24 +2,22 @@ import streamlit as st
 import pandas as pd
 import psycopg2
 
-# 1. Configuración de diseño (Atractivo y pantalla completa)
 st.set_page_config(page_title="Cartera Venecia", page_icon="🏡", layout="wide")
 
-# Función para conectarse a Supabase de forma segura
 @st.cache_data(ttl=600)
 def cargar_datos():
-    # Conexión directa por parámetros (evita errores de lectura de URL)
-    conexion = psycopg2.connect(
+    conn = psycopg2.connect(
         host=st.secrets["supabase"]["host"],
         port=st.secrets["supabase"]["port"],
-        database=st.secrets["supabase"]["dbname"],
+        dbname=st.secrets["supabase"]["dbname"],
         user=st.secrets["supabase"]["user"],
-        password=st.secrets["supabase"]["password"]
+        password=st.secrets["supabase"]["password"],
+        sslmode="require"
     )
-    
-    query = 'SELECT * FROM reporte_gerencial;'
-    df = pd.read_sql_query(query, conexion)
-    conexion.close()
+
+    query = "SELECT * FROM reporte_gerencial;"
+    df = pd.read_sql_query(query, conn)
+    conn.close()
     return df
 
 try:

@@ -14,8 +14,8 @@ def cargar_datos():
         password=st.secrets["supabase"]["password"],
         sslmode="require"
     )
-    
-    query = 'SELECT * FROM reporte_gerencial;'
+
+    query = "SELECT * FROM reporte_gerencial;"
     df = pd.read_sql_query(query, conexion)
     conexion.close()
     return df

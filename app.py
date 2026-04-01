@@ -161,7 +161,7 @@ except Exception as e:
                 ),
                 "valor_pagado": st.column_config.NumberColumn("Valor", format="$ %d")
             }
-        )
+            )
 
         # ==========================================
         # 🔍 VISTA DE DETALLE (Visualización de Imagen)
